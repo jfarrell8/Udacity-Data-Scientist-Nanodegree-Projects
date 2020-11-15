@@ -13,6 +13,8 @@ In this project, I worked on a dataset containing messages related to disaster r
 
 Loads up the message and categorical data from local csv files. These files are then combined into a dataframe that is subsequently cleaned. This df/table is then uploaded into a SQLite database.
 
+![Web App](/images/ETL%20df.png)
+
 *train_classifier.py*:
 
 Loads table from the database, creates a ML pipeline, and uses GridSearchCV to tune the model hyperparameters. Subsequent fitting and prediction using the "optimal" model is performed. The model is then saved to a pickle file to be run on the web app.
