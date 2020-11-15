@@ -19,7 +19,7 @@ Loads table from the database, creates a ML pipeline, and uses GridSearchCV to t
 
 *run.py*:
 
-Runs a simple web app that displays two bar charts detailing genre and category distribution within the data set.
+Runs a simple web app that displays two bar charts detailing genre and category distribution within the data set on the home page. Then, when a message is input into the visual classifier, the model predicts which category the message should belong to per the images of the webpage below.
 
 ![Web App](/images/Web%20app1.png)
 
