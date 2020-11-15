@@ -20,3 +20,5 @@ Loads table from the database, creates a ML pipeline, and uses GridSearchCV to t
 *run.py*:
 
 Runs a simple web app that displays two bar charts detailing genre and category distribution within the data set.
+
+![Web App](/images/Web app1.png)
