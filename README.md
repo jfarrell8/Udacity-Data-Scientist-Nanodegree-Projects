@@ -22,17 +22,17 @@ In this project, I worked on a dataset containing messages related to disaster r
 
 #### Files:
 
-*process_data.py*:
+*../data/process_data.py*:
 
 Loads up the message and categorical data from local csv files. These files are then combined into a dataframe that is subsequently cleaned. This df/table is then uploaded into a SQLite database.
 
 ![Web App](/images/ETL%20df.png)
 
-*train_classifier.py*:
+*../model/train_classifier.py*:
 
 Loads table from the database, creates a ML pipeline, and uses GridSearchCV to tune the model hyperparameters. Subsequent fitting and prediction using the "optimal" model is performed. The model is then saved to a pickle file to be run on the web app.
 
-*run.py*:
+*../app/run.py*:
 
 Runs a simple web app that displays two bar charts detailing genre and category distribution within the data set on the home page. Then, when a message is input into the visual classifier, the model predicts which category the message should belong to per the images of the webpage below.
 
