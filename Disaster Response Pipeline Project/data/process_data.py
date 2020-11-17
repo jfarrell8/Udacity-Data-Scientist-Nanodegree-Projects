@@ -5,9 +5,13 @@ from sqlalchemy import create_engine
 def load_data(messages_filepath, categories_filepath):
     """
     Load data given a messages file and a categories file.
-    :param messages_filepath: messages file
-    :param categories_filepath: categories file
-    return df containing the messages and categories data
+    
+    Args:
+       messages_filepath: messages file
+       categories_filepath: categories file
+    
+    Returns:
+        df: DataFrame containing the messages and categories data
     """
     
     # load messages and categories data
@@ -22,8 +26,12 @@ def load_data(messages_filepath, categories_filepath):
 def clean_data(df):
     """
     Clean dataframe for input into a model in a future step.
-    :param df: dataframe to be cleaned
-    return cleaned dataframe
+    
+    Args:
+        df: dataframe to be cleaned
+    
+    Returns:
+        df: cleaned dataframe
     """
     
     # split categories column in df into separate columns
@@ -66,12 +74,14 @@ def save_data(df, database_filename):
     """
     Save the dataframe table into a SQLite database. A database and a table
     will both be created in this function.
-    :param df: dataframe to save
-    :param database_filename: database filename to create and save df to
+    
+    Args:
+        df: dataframe to save
+        database_filename: database filename to create and save df to
     """
     
     engine = create_engine('sqlite:///{}'.format(database_filename))
-    df.to_sql('etl_disaster_pipeline', engine, index=False)  
+    df.to_sql('etl_disaster_pipeline', engine, index=False, if_exists='replace')  
 
 
 def main():
