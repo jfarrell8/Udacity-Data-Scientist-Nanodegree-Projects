@@ -1,6 +1,7 @@
 import sys
 import pandas as pd
 import numpy as np
+import re
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.tree import DecisionTreeClassifier
@@ -22,8 +23,14 @@ nltk.download('stopwords')
 def load_data(database_filepath):
     """
     Load data up from the database_filepath created in '../data/process_data.py'
-    :param database_filepath: the filepath from which to grab the database needed to load the data
-    return the X and Y data and category_names from the etl_disaster_pipeline table in the db
+    
+    Args:
+        database_filepath: the filepath from which to grab the database needed to load the data
+        
+    Returns:    
+        X (df): X training data from etl_disaster_pipeline table in the db
+        y (df): y training data from etl_disaster_pipeline table in the db
+        category_names (Series): columns (category) names from the etl_disaster_pipeline table in the db
     """
     # load data from database
     engine = create_engine('sqlite:///{}'.format(database_filepath))
@@ -36,13 +43,19 @@ def load_data(database_filepath):
 
 def tokenize(text):
     """
-    Function tokenize text.
-    :param text: string of text to tokenize    
-    return tokenized version of text
+    Function that tokenizes text.
+    
+    Args:
+        text (string): text to tokenize
+    
+    Returns:
+        clean_tokens (list): tokenized version of text
     """
+    # remove special characters and lowercase
+    text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
     
     tokens = word_tokenize(text)
-    tokens = [t.lower() for t in tokens if (t.lower() not in stopwords.words('english')) & (t.isalpha())]
+    tokens = [t for t in tokens if t not in stopwords.words('english')]
     lemmatizer = WordNetLemmatizer()
 
     clean_tokens = []
@@ -58,7 +71,9 @@ def build_model():
     Build a ML model and tune the hyperparameters of the model by creating a pipeline,
     establishing the parameters of interest, and running GridSearchCV
     on the model/hyperparameters to identify the "optimal" model.
-    return the best model
+    
+    Returns:
+        cv: The best model
     """
     # create pipeline
     pipeline = Pipeline([
@@ -82,10 +97,12 @@ def evaluate_model(model, X_test, Y_test, category_names):
     """
     Use the model to evaluate test data and compare predictions to actual test outputs.
     Print out classification reports for each category in Y_test data.
-    :param model: ML model to predict from
-    :param X_test: the testing data for our features
-    :param Y_test: labeled testing data
-    :param category_names: list of category names
+    
+    Args:
+        model: ML model to predict from
+        X_test (df): the testing data for our features
+        Y_test (df): labeled testing data
+        category_names (Series): list of category names
     """
     
     # predict categories from the feature test data
@@ -100,9 +117,11 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 def save_model(model, model_filepath):
     """
-    Saves our model to a pickle file via a provided model filepath
-    :param model: ML model to save
-    :param model_filepath: path destination for the pickle file
+    Saves our model to a pickle file via a provided model filepath.
+    
+    Args:
+        model: ML model to save
+        model_filepath: path destination for the pickle file
     """
     
     saved_model = pickle.dump(model, open(model_filepath, 'wb'))
