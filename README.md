@@ -7,6 +7,9 @@ When natural disasters hit communities, there is often a severe lack of organize
 
 In this project, I worked on a dataset containing messages related to disaster relief efforts along with corresponding categories of each message. Using the messages and associated categories, I built a ML pipeline (and simple web app) to categorize each event/message in order to appropriately send the message to the necessary disaster relief agency.
 
+#### Preperation Notebooks
+There are two Jupyter notebooks related to developing the ETL and ML Pipelines. The work performed in these two notebooks was used to develop the Python files to run in the Command Line.
+
 #### To Run:
 1. Run the following commands in the project's root directory to set up your database and model.
 
